@@ -130,14 +130,14 @@ void* simple_malloc(size_t size) {
  *
  */
 void simple_free(void * ptr) {
-  BlockHeader * block = NULL; /* TODO: Find block corresponding to ptr */
+  BlockHeader * block = (BlockHeader *)( (uintptr_t)ptr - sizeof(BlockHeader) ); /* TODO: Find block corresponding to ptr */
   if (GET_FREE(block)) {
     /* Block is not in use -- probably an error */
     return;
   }
 
   /* TODO: Free block */
-
+  SET_FREE(block, 1);
   /* Possibly coalesce consecutive free blocks here */
 }
 
