@@ -90,7 +90,7 @@ void* simple_malloc(size_t size) {
       /* Check if free block is large enough */
       if (SIZE(current) >= aligned_size) {
         /* Will the remainder be large enough for a new block? */
-        if (SIZE(current) - aligned_size < sizeof(BlockHeader) + MIN_SIZE) {
+        if (SIZE(current) - aligned_size >= sizeof(BlockHeader) + MIN_SIZE) {
           /* TODO: Use block as is, marking it non-free*/
           uintptr_t block_start = (uintptr_t) current;
           uintptr_t allocated_block_end   = block_start + sizeof(BlockHeader) + aligned_size;
