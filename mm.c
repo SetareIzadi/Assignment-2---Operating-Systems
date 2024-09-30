@@ -7,13 +7,9 @@
  */
 
 #include <stdint.h>
-
 #include "mm.h"
 
-
-
 /* Proposed data structure elements */
-
 typedef struct header {
   struct header * next;     // Bit 0 is used to indicate free block 
   uint64_t user_block[0];   // Standard trick: Empty array to make sure start of user block is aligned
@@ -56,6 +52,9 @@ void simple_init() {
       SET_NEXT(last, first);
       SET_FREE(last, 0);
     }
+    else {
+      first = NULL;
+    }
     current = first;     
   } 
 }
@@ -78,7 +77,7 @@ void* simple_malloc(size_t size) {
     if (first == NULL) return NULL;
   }
 
-  size_t aligned_size = size;  /* TODO: Alignment */
+  size_t aligned_size = (size + 7) & ~(size_t)0x7;  /* TODO: Alignment */
 
   /* Search for a free block */
   BlockHeader * search_start = current;
@@ -93,11 +92,23 @@ void* simple_malloc(size_t size) {
         /* Will the remainder be large enough for a new block? */
         if (SIZE(current) - aligned_size < sizeof(BlockHeader) + MIN_SIZE) {
           /* TODO: Use block as is, marking it non-free*/
+          uintptr_t block_start = (uintptr_t) current;
+          uintptr_t allocated_block_end   = block_start + sizeof(BlockHeader) + aligned_size;
+          BlockHeader * new_block = (BlockHeader *)allocated_block_end;
+
+          SET_NEXT(new_block, GET_NEXT(current));
+          SET_FREE(new_block, 1);
+
+          SET_NEXT(current, new_block);
+          SET_FREE(new_block, 0);
         } else {
           /* TODO: Carve aligned_size from block and allocate new free block for the rest */
+          SET_FREE(current, 0);
         }
-        
-        return (void *) NULL; /* TODO: Return address of current's user_block and advance current */
+
+        void * user_ptr = (void *)((uintptr_t) current) + sizeof(BlockHeader);
+        current = GET_NEXT(current);
+        return user_ptr; /* TODO: Return address of current's user_block and advance current */
       }
     }
 
