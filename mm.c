@@ -84,29 +84,27 @@ void* simple_malloc(size_t size) {
   do {
  
     if (GET_FREE(current)) {
-
       /* Possibly coalesce consecutive free blocks here */
 
       /* Check if free block is large enough */
       if (SIZE(current) >= aligned_size) {
         /* Will the remainder be large enough for a new block? */
-        if (SIZE(current) - aligned_size >= sizeof(BlockHeader) + MIN_SIZE) {
-          /* TODO: Use block as is, marking it non-free*/
+        if (SIZE(current) - aligned_size < sizeof(BlockHeader) + MIN_SIZE) {
+          /* TODO: Use block as is, marking it non-free */
+          SET_FREE(current, 0);  // Mark current block as allocated
+        } else {
+          /* TODO: Carve aligned_size from block and allocate new free block for the rest */
           uintptr_t block_start = (uintptr_t) current;
-          uintptr_t allocated_block_end   = block_start + sizeof(BlockHeader) + aligned_size;
+          uintptr_t allocated_block_end = block_start + sizeof(BlockHeader) + aligned_size;
           BlockHeader * new_block = (BlockHeader *)allocated_block_end;
 
           SET_NEXT(new_block, GET_NEXT(current));
           SET_FREE(new_block, 1);
 
           SET_NEXT(current, new_block);
-          SET_FREE(new_block, 0);
-        } else {
-          /* TODO: Carve aligned_size from block and allocate new free block for the rest */
-          SET_FREE(current, 0);
+          SET_FREE(current, 0);  // Mark current block as allocated
         }
-
-        void * user_ptr = (void *)((uintptr_t) current) + sizeof(BlockHeader);
+        void * user_ptr = (void *)((uintptr_t) current + sizeof(BlockHeader));
         current = GET_NEXT(current);
         return user_ptr; /* TODO: Return address of current's user_block and advance current */
       }
