@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include "mm.h"
+#include "mm_aux.cc"
 
 /* Proposed data structure elements */
 typedef struct header {
@@ -58,8 +59,6 @@ void simple_init() {
     current = first;     
   } 
 }
-
-
 /**
  * @name    simple_malloc
  * @brief   Allocate at least size contiguous bytes of memory and return a pointer to the first byte.
@@ -116,8 +115,6 @@ void* simple_malloc(size_t size) {
  /* None found */
   return NULL;
 }
-
-
 /**
  * @name    simple_free
  * @brief   Frees previously allocated memory and makes it available for subsequent calls to simple_malloc
@@ -138,5 +135,3 @@ void simple_free(void * ptr) {
   SET_FREE(block, 1);
   /* Possibly coalesce consecutive free blocks here */
 }
-
-
