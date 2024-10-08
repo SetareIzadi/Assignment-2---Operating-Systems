@@ -13,6 +13,7 @@ add_executable(Assignment2
         memory_setup.c
         mm.c
         mm.h
-        mm_aux.c)
+        mm_aux.c
+        test_mm.c)
 
 
