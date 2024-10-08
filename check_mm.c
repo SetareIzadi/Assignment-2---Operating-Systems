@@ -272,8 +272,6 @@ START_TEST (test_memory_exerciser)
     }
   }
 }
-
-
 END_TEST
 
 /**
@@ -285,6 +283,28 @@ END_TEST
  * @brief  Add your new unit tests to this suite.
  *
  */
+
+START_TEST (test_not_first_fit)
+{
+  void * a = MALLOC(100);
+  void * b = MALLOC(100);
+  void * c = MALLOC(100);
+  FREE(a);
+
+  void * d = MALLOC(100);
+
+  /* Since we're using next-fit, and the current pointer is after 'c',
+     the allocator will not start at the beginning and will skip over the free block 'a'. */
+  ck_assert_msg(d != a, "Allocator used first-fit strategy");
+
+  FREE(b);
+  FREE(c);
+  FREE(d);
+}
+END_TEST
+
+
+
 Suite* simple_malloc_suite()
 {
   Suite *s = suite_create("simple_malloc");
@@ -293,6 +313,7 @@ Suite* simple_malloc_suite()
   tcase_add_test (tc_core, test_simple_allocation);
   tcase_add_test (tc_core, test_simple_unique_addresses);
   tcase_add_test (tc_core, test_memory_exerciser);
+  tcase_add_test (tc_core, test_not_first_fit);
 
   suite_add_tcase(s, tc_core);
   return s;

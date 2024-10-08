@@ -2,6 +2,7 @@
 #include "io.h"
 #include <stdlib.h> // For malloc
 #include <unistd.h> // For read and write
+#include "mm.h"
 
 // Doubly linked list node structure
 typedef struct Node {
@@ -12,7 +13,7 @@ typedef struct Node {
 
 // Function to create a new node with a value
 Node* create_node(int value) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    Node* newNode = (Node*)simple_malloc(sizeof(Node));
     if (newNode != NULL) {
         newNode->value = value;
         newNode->next = NULL;
@@ -49,7 +50,7 @@ void remove_last(Node** head, Node** tail) {
         *tail = (*tail)->prev;
         (*tail)->next = NULL;
     }
-    free(toRemove);
+    simple_free(toRemove);
 }
 
 // Function to print the list in the desired format
@@ -122,7 +123,7 @@ int main()
     while (head != NULL) {
         Node* temp = head;
         head = head->next;
-        free(temp);
+        simple_free(temp);
     }
 
     return 0;
