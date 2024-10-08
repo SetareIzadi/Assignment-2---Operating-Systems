@@ -12,6 +12,7 @@ add_executable(Assignment2
         main.c
         memory_setup.c
         mm.c
-        mm.h)
+        mm.h
+        mm_aux.c)
 
 
