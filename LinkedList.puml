@@ -12,25 +12,25 @@ class MemoryBlock {
     + Size: int
     + Next: MemoryBlock
     + Free: Boolean
-    + MemoryAdress: int
+    + MemoryAddress: int
 }
 
 MemoryBlock1 : Size: 32
 MemoryBlock1 : Next: No
 MemoryBlock1 : Free: No
-MemoryBlock1 : MemoryAdress: 0x00000000
+MemoryBlock1 : MemoryAddress: 0x00000000
 MemoryBlock1 --> MemoryBlock2 : Next
 
 MemoryBlock2 : Size: 20
 MemoryBlock2 : Next: No
 MemoryBlock2 : Free: Yes
-MemoryBlock2 : MemoryAddress: 0x00000020
+MemoryBlock2 : MemoryAddress: 0x00000030
 MemoryBlock2 --> MemoryBlock3 : Next
 
 MemoryBlock3 : Size: 10
 MemoryBlock3 : Next: No
 MemoryBlock3 : Free: No
-MemoryBlock3 : MemoryAddress: 0x00000040
+MemoryBlock3 : MemoryAddress: 0x00000054
 MemoryBlock3 --> MemoryBlock1 : Next
 
 @enduml
