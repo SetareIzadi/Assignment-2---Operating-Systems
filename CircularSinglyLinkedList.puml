@@ -16,21 +16,21 @@ class MemoryBlock {
 }
 
 MemoryBlock1 : Size: 32
-MemoryBlock1 : Next: 0x30
+MemoryBlock1 : Next: 0x28
 MemoryBlock1 : Free: No
 MemoryBlock1 : MemoryAddress: 0x00
 MemoryBlock1 --> MemoryBlock2 : Next
 
-MemoryBlock2 : Size: 20
-MemoryBlock2 : Next: 0x54
+MemoryBlock2 : Size: 24
+MemoryBlock2 : Next: 0x48
 MemoryBlock2 : Free: Yes
-MemoryBlock2 : MemoryAddress: 0x30
+MemoryBlock2 : MemoryAddress: 0x28
 MemoryBlock2 --> MemoryBlock3 : Next
 
-MemoryBlock3 : Size: 10
-MemoryBlock3 : Next: No
+MemoryBlock3 : Size: 16
+MemoryBlock3 : Next: 0x00
 MemoryBlock3 : Free: No
-MemoryBlock3 : MemoryAddress: 0x54
+MemoryBlock3 : MemoryAddress: 0x48
 MemoryBlock3 --> MemoryBlock1 : Next
 
 @enduml
