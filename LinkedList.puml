@@ -31,5 +31,6 @@ MemoryBlock3 : Size: 10
 MemoryBlock3 : Next: No
 MemoryBlock3 : Free: No
 MemoryBlock3 : MemoryAddress: 0x00000040
+MemoryBlock3 --> MemoryBlock1 : Next
 
 @enduml
