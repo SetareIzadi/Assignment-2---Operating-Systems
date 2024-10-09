@@ -1,0 +1,36 @@
+@startuml
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+    ArrowColor Black
+    RoundCorner 20
+}
+
+left to right direction
+
+class MemoryBlock {
+    + Size: int
+    + Next: MemoryBlock
+    + Free: Boolean
+    + MemoryAddress: int
+}
+
+MemoryBlock1 : Size: 32
+MemoryBlock1 : Next: 0x28
+MemoryBlock1 : Free: No
+MemoryBlock1 : MemoryAddress: 0x00
+MemoryBlock1 --> MemoryBlock2 : Next
+
+MemoryBlock2 : Size: 24
+MemoryBlock2 : Next: 0x48
+MemoryBlock2 : Free: Yes
+MemoryBlock2 : MemoryAddress: 0x28
+MemoryBlock2 --> MemoryBlock3 : Next
+
+MemoryBlock3 : Size: 16
+MemoryBlock3 : Next: 0x00
+MemoryBlock3 : Free: No
+MemoryBlock3 : MemoryAddress: 0x48
+MemoryBlock3 --> MemoryBlock1 : Next
+
+@enduml
