@@ -14,6 +14,7 @@ add_executable(Assignment2
         mm.c
         mm.h
         mm_aux.c
-        test_mm.c)
+        test_mm.c
+        mm.c)
 
 
