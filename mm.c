@@ -16,6 +16,8 @@ typedef struct header {
   uint64_t user_block[0];   // Standard trick: Empty array to make sure start of user block is aligned
 } BlockHeader;
 
+
+
 /* Macros to handle the free flag at bit 0 of the next pointer of header pointed at by p */
 #define GET_NEXT(p)    (void *) ( ((uintptr_t)(p->next)) & ~((uintptr_t) 0x1) )
 #define SET_NEXT(p,n)  p->next = (void *) ( ((uintptr_t)(n) & ~((uintptr_t)0x1)) | ((uintptr_t)(p->next) & 0x1) )
